@@ -7,7 +7,7 @@ import psutil
 mem = psutil.Process() #저장공간 계산
 import time
 
-f = open("C:/Users/HOME/Desktop/PythonWorkspace/2021 2학기 과제연구/20210901 도로_가공.txt", 'r',encoding="utf-8")
+f = open("C:/Users/yulyu/Desktop/과제연구 집탐 코드/20210901 도로_가공.txt", 'r',encoding="utf-8")
 lines = f.readlines()
 #도로 데이터에서 시점명과 종점명이 누락되어 있는 것을 발견함-서울시와 다른 지역 사이 경계에 있는 도로이거나 마땅한 이름이 없는 것으로 추정됨
 #이런 데이터들은 삭제하였음(수작업)
@@ -112,8 +112,13 @@ prev=[]
 for x in range(2000):
     prev.append(0) 
 
+print("큐 들어간다")
+qcnt=0
+
 #그냥 가중치가 아니라 h(x)+g(x)를 사용해야 하는 것에 유의!
-while pq:
+while not pq.empty():
+    qcnt+=1
+    print("%d번째"%qcnt)
     u=pq.get()
     uvalue=-u[0]#가장 작은 f값
     uindex=u[1]#그 지점의 index
@@ -127,7 +132,10 @@ while pq:
     chk[uindex]=True
 
     if uindex in graph:
+        qqcnt=0
         for node in graph[uindex]: #graph[uindex].items()->uindex와 연결된 모든 점의 [index, 가중치]값들
+            qqcnt+=1
+            print("%d-%d번째"%(qcnt,qqcnt))
             thisindex=node[0]#인덱스
             thisvalue=node[1]#가중치
 
@@ -141,11 +149,11 @@ while pq:
 
 print("%d %s"%(종점명_index,value_to_key(종점명_index)))
 이전=종점명_index
-while True:
+'''while True:
     if 이전==시점명_index:
         break
     print("%d %s"%(prev[이전],value_to_key(prev[이전])))
-    이전=prev[이전]
+    이전=prev[이전]'''
 
 
 
