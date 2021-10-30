@@ -1,7 +1,7 @@
 ###############################################
 #휴리스틱 함수 결정하는 변수 p
 #무한대는 1e9로 표현
-p = 1
+p = 3
 
 import psutil
 mem = psutil.Process() #저장공간 계산
@@ -92,7 +92,7 @@ for x in range(2000):
     f.append(1e9)
     h.append(0)
 for x in range(1, 1633):
-    h[x]=(HR1.휴리스틱1(value_to_key(x),종점명,p)) #1~1632
+    h[x]=HR1.휴리스틱1(value_to_key(x),종점명,p) #1~1632
 
 start = time.time()#시간 측정 시작
 
@@ -117,25 +117,18 @@ qcnt=0
 
 #그냥 가중치가 아니라 h(x)+g(x)를 사용해야 하는 것에 유의!
 while not pq.empty():
-    qcnt+=1
-    print("%d번째"%qcnt)
     u=pq.get()
     uvalue=-u[0]#가장 작은 f값
     uindex=u[1]#그 지점의 index
-
+    
     if uindex==종점명_index: #종점에 도달하면!
         print("도착!")
         break
-    if chk[uindex]: #이미 방문한 점이면 넘어감
-        continue
 
     chk[uindex]=True
 
     if uindex in graph:
-        qqcnt=0
         for node in graph[uindex]: #graph[uindex].items()->uindex와 연결된 모든 점의 [index, 가중치]값들
-            qqcnt+=1
-            print("%d-%d번째"%(qcnt,qqcnt))
             thisindex=node[0]#인덱스
             thisvalue=node[1]#가중치
 
@@ -149,11 +142,12 @@ while not pq.empty():
 
 print("%d %s"%(종점명_index,value_to_key(종점명_index)))
 이전=종점명_index
-'''while True:
+while True:
     if 이전==시점명_index:
         break
     print("%d %s"%(prev[이전],value_to_key(prev[이전])))
-    이전=prev[이전]'''
+    이전=prev[이전]
+print("%d. 따라란~"%g[종점명_index])
 
 
 
