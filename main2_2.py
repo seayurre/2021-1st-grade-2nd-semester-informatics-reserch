@@ -1,13 +1,13 @@
 ###############################################
 #휴리스틱 함수 결정하는 변수 p
 #무한대는 1e9로 표현
-p = 2
+p = 1e9
 
 import psutil
 mem = psutil.Process() #저장공간 계산
 import time
 
-f = open("C:/Users/HOME/Desktop/PythonWorkspace/2021 2학기 과제연구/20210901 도로_가공.txt", 'r',encoding="utf-8")
+f = open("C:/Users/yulyu/Desktop/과제연구 집탐 코드/20210901 도로_가공.txt", 'r',encoding="utf-8")
 lines = f.readlines()
 #도로 데이터에서 시점명과 종점명이 누락되어 있는 것을 발견함-서울시와 다른 지역 사이 경계에 있는 도로이거나 마땅한 이름이 없는 것으로 추정됨
 #이런 데이터들은 삭제하였음(수작업)
@@ -30,7 +30,7 @@ for line in lines:
     if 종점명 not in 지명_index.keys():
         지명_index[종점명] = index
         index+=1
-    
+
 
 #그래프 연결 관계 나타내기
 graph = {}
@@ -57,10 +57,11 @@ key가 지점의 index
 value가 그 지점과 연결된 다른 지점들이고 [index , 가중치]로 저장됨
 '''
 ###########################################
-gf = open("graph.txt", 'w', encoding="utf-8")
+gf = open("C:/Users/yulyu/Desktop/과제연구 집탐 코드/graph.txt", 'a', encoding="utf-8")
 for i in graph.keys():
-    print(i)
-    write = "{},{},{}".format(i, value_to_key(i), graph[i]) #출력이 안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    yeewrite = "{},{},{}\n".format(i, value_to_key(i), graph[i]) #출력이 안돼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    gf.write(yeewrite)
+gf.close()
 ###########################################
 
 #휴리스틱 함수 불러오기
@@ -216,7 +217,7 @@ print(mem.memory_info()) #저장공간 출력 - rss 값 byte 확인
         print("갈 수 있는 방법이 없습니다")
         return '''
 
-'''
+
 finish = time.time()
 
 availableHR = 1
@@ -236,4 +237,3 @@ print("걸리는 시간 :", 시간)
 print("p = {}인 휴리스틱 함수를 사용할 때 Astar 함수 시간 : {}".format(p, finish - start)) 
 
 print(mem.memory_info()) #저장공간 출력 - rss 값 byte 확인
-'''
