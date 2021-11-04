@@ -67,13 +67,14 @@ finish = 지명_index[f]
 
 Node=list()#index, f값, g값, h값을 묶어서 정리
 Node.append([])
-for x in range(1, 1814):
+for x in range(1, 1815):
     Node.append([])
     Node[x].append(x)#index
     Node[x].append(1e9)#f값
     Node[x].append(1e9)#g값
     Node[x].append(HR1.휴리스틱1(value_to_key(x),종점명,p))#h값
     Node[x].append(0)#chk-0이면 아직 안 간 거고 1이면 간 점이다
+
 
 #0-index 1-f 2-g 3-h 4-chk
 Node[start][1]=Node[start][3]
@@ -83,6 +84,8 @@ while True:
     #while not q.empty()와 같은 기능을 하는 부분
     끝났나=True
     for x in Node:
+        if len(x)!=5: #0번 점이거나 뭔가 문제가 있는 점
+            continue
         if x[4]==0:#Q가 아직 안 비었네!
             끝났나=False
     if 끝났나:
@@ -93,6 +96,8 @@ while True:
     fmin=1e11
     findex=start
     for x in Node:
+        if len(x)!=5:
+            continue
         if x[4]==0 and fmin>x[1]:
             fmin=x[1]
             findex=x[0]
@@ -102,27 +107,22 @@ while True:
         print("찾았다!!")
         break
 
-    for v in graph[findex]:
-        vindex=v[0]
-        vw=v[1]
+    #연결된 점들 쭉 탐색
+    if findex in graph:
+        for v in graph[findex]:
+            vindex=v[0]#연결된 점의 인덱스
+            vw=v[1]#가중치
 
-        if Node[vindex][4]==0 and Node[vindex][2]>Node[findex][2]+vw:
-            Node[vindex][2]=Node[findex][2]+vw
-            Node[vindex][1]=Node[vindex][2]+Node[vindex][3]
+            if Node[vindex][4]==0 and Node[vindex][2]>Node[findex][2]+vw:
+                Node[vindex][2]=Node[findex][2]+vw
+                Node[vindex][1]=Node[vindex][2]+Node[vindex][3]
 
 print(Node[finish][2])
 
 
 
-        
+    
 
-
-
-
-for i in path:
-    print(value_to_key(i))
-
-print("시간 : {}".format(f[finish])) 
     
 
 
