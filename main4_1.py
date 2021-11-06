@@ -29,6 +29,7 @@ p_time = []
 for i in range(5):
     p_time.append([])
 for _ in range(5):
+    print("{}번째 실행".format(_+1))
     for k in range(5):
         p = plist[k]
         Node=list()#index, f값, g값, h값을 묶어서 정리
@@ -147,7 +148,7 @@ for _ in range(5):
 
         timefinish=time.time()
 
-        if p == 1:
+        if p == 1 and _ == 0:
             이전=finish
             print(이전)
             printlist=[]
@@ -160,9 +161,9 @@ for _ in range(5):
             printlist = printlist[::-1]
             for i in printlist:
                 print("{} {}".format(i, value_to_key(i)))
-            print("시간은 %f"%Node[finish][2])
+            print("소요 시간 : %f"%Node[finish][2])
 
-        print("p=%d일 때 실행시간은 %f"%(p,timefinish-timestart))
+        print("p=%d : 실행 시간 %f"%(p,timefinish-timestart))
         p_time[k].append(timefinish - timestart)
 
         # import os
@@ -172,5 +173,5 @@ for i in range(5):
     psum = 0
     for j in range(len(p_time[i])):
         psum += p_time[i][j]
-    print("p = {} : 평균 시간 {}".format(p, psum/len(p_time[i])))
+    print("p = {} : 평균 시간 {}".format(plist[i], psum/len(p_time[i])))
     
